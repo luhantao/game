@@ -5,31 +5,23 @@ require.config({
 		//工具模块
 		'less': 'tools/less.min',
 		'jquery': 'tools/jquery.min',
+
+		//功能模块
+		'canvas': 'modules/canvas',					//初始化canvas模块
+		'dyadicArray': 'modules/dyadicArray',		//二维数组记录区块
+		'move': 'modules/move', 					//监听上下左右键盘事件
 	}
 });
 
 require(['less']);
 
-require(['jquery'], function($){
-	$(window).on('keydown', function(event){
-		var keyCode = event.keyCode;
-		if (keyCode >36 && keyCode < 41){
-			event.preventDefault();
-			switch(keyCode){
-				case 37:
-					console.log('left');
-					//$('#game-area .move-block').animate({}, 2000);
-					break;
-				case 38:
-					console.log('up');
-					break;
-				case 39:
-					console.log('right');
-					break;
-				case 40:
-					console.log('down');
-					break;
-			}
-		}
+require(['dyadicArray', 'canvas'], function(dyadicArray, canvas){
+	dyadicArray.init(4);	//随机初始化游戏数组
+	canvas.paint();			//初始绘制canvas
+
+	//加载移动模块，绑定键盘事件
+	require(['move'], function(move){
+		move();
 	});
 });
+
