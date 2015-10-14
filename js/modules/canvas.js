@@ -1,6 +1,6 @@
 define('canvas', ['jquery', 'dyadicArray'], function($, dyadicArray){
-	var width = 500,
-		height = 500,
+	var width = 450,
+		height = 450,
 		canvas = document.querySelector('#main_canvas'),
 		context = canvas.getContext('2d'),
 		interval = 10,		//小块间隔
@@ -20,11 +20,19 @@ define('canvas', ['jquery', 'dyadicArray'], function($, dyadicArray){
 		else if (value == 8)
 			context.fillStyle = '#F5D080';
 		else if (value == 16)
-			context.fillStyle = '#FC9B40';
+			context.fillStyle = '#FFA855';
 		else if (value == 32)
-			context.fillStyle = '#FA8618';
+			context.fillStyle = '#E7750A';
 		else if (value == 64)
+			context.fillStyle = '#FF6A45';
+		else if (value == 128)
 			context.fillStyle = '#EE0D01';
+		else if (value == 256)
+			context.fillStyle = '#F556AB';
+		else if (value == 512)
+			context.fillStyle = '#C24FFC';
+		else if (value == 1024)
+			context.fillStyle = '#17A3EF';
 		else
 			context.fillStyle = '#FEE41C';
 	}
@@ -61,17 +69,16 @@ define('canvas', ['jquery', 'dyadicArray'], function($, dyadicArray){
 		//随机生成一个新小块
 		paintNewOne: function(){
 			var newObj = dyadicArray.newOne();
-			//结束游戏
-			if (!newObj){
-				return false;
-			}
 
-			// context.fillStyle = newObj.value==4 ? '#F5F5AA' : '#FCF5D4';
-
-			var scale = 16;
+			var scale = 21;
 			function showNewOne(){
-				if (scale <= 0)
+				if (scale <= 0){
+					//检测是否游戏结束
+					if (newObj.gameover){
+						alert('游戏结束！');
+					}					
 					return;
+				}
 
 				context.fillStyle = newObj.value==4 ? '#F5F5AA' : '#FCF5D4';
 				context.fillRect(	(newObj.x+1)*interval + newObj.x*blockLength + scale,
@@ -85,7 +92,7 @@ define('canvas', ['jquery', 'dyadicArray'], function($, dyadicArray){
 					(newObj.y+1)*interval + (newObj.y+0.5)*blockLength +17 );
 
 				scale --;
-				setTimeout(showNewOne, 20);
+				setTimeout(showNewOne, 13);
 			}
 			showNewOne();
 		}

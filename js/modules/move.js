@@ -5,10 +5,12 @@ define('move', ['jquery', 'canvas', 'dyadicArray'], function($, canvas, dyadicAr
 			if (keyCode >36 && keyCode < 41){
 				event.preventDefault();
 				var array = dyadicArray.array();
+
 				switch(keyCode){
 					case 37:
 					//向左
 						// console.log('left');
+						var hasChanged = false;
 						for (var i = 0; i < array.length; i++){
 							var row = [];
 							for (var j = 0; j < array.length; j++){
@@ -34,18 +36,24 @@ define('move', ['jquery', 'canvas', 'dyadicArray'], function($, canvas, dyadicAr
 							}
 
 							for (var j = 0; j < array.length; j++){
+								if (array[i][j] != row[j]){
+									hasChanged = true;
+								}
 								array[i][j] = row[j];
 							}
 						}
 
 						//重新绘制canvas
-						canvas.paint();
-						canvas.paintNewOne();
+						if (hasChanged){
+							canvas.paint();
+							canvas.paintNewOne();
+						}
 						break;
 
 					case 38:
 					//向上
 						// console.log('up');
+						var hasChanged = false;
 						for (var j = 0; j < array.length; j++){
 							var col = [];
 							//按列将非0的格子取出
@@ -73,18 +81,24 @@ define('move', ['jquery', 'canvas', 'dyadicArray'], function($, canvas, dyadicAr
 							}
 							//更新array
 							for (var i = 0; i < array.length; i++){
+								if (array[i][j] != col[i]){
+									hasChanged = true;
+								}
 								array[i][j] = col[i];
 							}
 						}
 
 						//重新绘制canvas
-						canvas.paint();
-						canvas.paintNewOne();
+						if (hasChanged){
+							canvas.paint();
+							canvas.paintNewOne();
+						}
 						break;
 
 					case 39:
 					//向右
 						// console.log('right');
+						var hasChanged = false;
 						for (var i = 0; i < array.length; i++){
 							var row = [];
 							for (var j = 0; j < array.length; j++){
@@ -110,18 +124,24 @@ define('move', ['jquery', 'canvas', 'dyadicArray'], function($, canvas, dyadicAr
 							}
 
 							for (var j = 0; j < array.length; j++){
+								if (array[i][j] != row[j]){
+									hasChanged = true;
+								}
 								array[i][j] = row[j];
 							}
 						}
 
 						//重新绘制canvas
-						canvas.paint();
-						canvas.paintNewOne();
+						if (hasChanged){
+							canvas.paint();
+							canvas.paintNewOne();
+						}
 						break;
 
 					case 40:
 					//向下
 						// console.log('down');
+						var hasChanged = false;
 						for (var j = 0; j < array.length; j++){
 							var col = [];
 							//按列将非0的格子取出
@@ -148,13 +168,18 @@ define('move', ['jquery', 'canvas', 'dyadicArray'], function($, canvas, dyadicAr
 							}
 							//更新array
 							for (var i = 0; i < array.length; i++){
+								if (array[i][j] != col[i]){
+									hasChanged = true;
+								}
 								array[i][j] = col[i];
 							}
 						}
 
 						//重新绘制canvas
-						canvas.paint();
-						canvas.paintNewOne();
+						if (hasChanged){
+							canvas.paint();
+							canvas.paintNewOne();
+						}
 						break;
 				}
 			}

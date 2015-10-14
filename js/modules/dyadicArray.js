@@ -28,7 +28,9 @@ define('dyadicArray', ['jquery'], function($){
 	}
 
 	return {
+		//初始化随机数组
 		init: randomArray,
+		//移动后添加新的一格
 		newOne: function(){
 			var possibility = [];
 			for (var i = 0; i < array.length; i++){
@@ -38,20 +40,39 @@ define('dyadicArray', ['jquery'], function($){
 						var obj = {
 							x: j,
 							y: i,
-							value: value
+							value: value,
+							gameover: false
 						}
 						possibility.push(obj);
 					}
 				}
 			}
-			if (possibility.length == 0){
-				alert('游戏结束');
-				return false;
-			}
 
 			var random = Math.floor( Math.random() * possibility.length );
 			//更新array数据
 			array[possibility[random].y][possibility[random].x] = possibility[random].value;
+			//检测是否游戏结束
+			if (possibility.length == 1){
+				var gameover = true;
+				for (var i = 0; i < array.length; i++){
+					for (var j = 0; j < array.length; j++){
+						if (i+1 < array.length){
+							if (array[i][j] == array[i+1][j]){
+								gameover = false;
+							}
+						}
+						if (j+1 <array.length){
+							if (array[i][j] == array[i][j+1]){
+								gameover = false;
+							}
+						}
+					}
+				}
+				if (gameover){
+					possibility[random].gameover = true;
+				}
+			}
+			
 			return possibility[random];
 		},
 		array: function(){
